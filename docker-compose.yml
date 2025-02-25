@@ -1,0 +1,26 @@
+version: "3.8"
+services:
+  postgres:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: tweetagentsuser
+      POSTGRES_PASSWORD: yourpassword
+      POSTGRES_DB: tweetagentsdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  qdrant:
+    image: qdrant/qdrant:latest
+    ports:
+      - "6333:6333" # REST API
+      - "6334:6334" # gRPC API
+    volumes:
+      - qdrant-data:/qdrant/storage
+    environment:
+      QDRANT_ALLOW_ANONYMOUS_API_KEYS: 1
+
+volumes:
+  postgres-data:
+  qdrant-data:
